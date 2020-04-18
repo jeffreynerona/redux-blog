@@ -30,7 +30,10 @@ const initialState = {
         return Object.assign({}, state, {
             userPosts: {
             ...state.userPosts,
-            [action.payload.userId]: action.payload.post,
+            [action.payload.userId]: [
+              action.payload.post,
+              ...state.userPosts[action.payload.userId],
+            ],
           }
         });
       case "DELETE_POST":

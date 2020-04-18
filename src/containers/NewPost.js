@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Form, Button } from 'semantic-ui-react';
 
 const NewPost = props => {
-  const { handleSubmit } = props
+  const { handleSubmit } = props;
   return (
     <Form onSubmit={handleSubmit}>
       <div>
