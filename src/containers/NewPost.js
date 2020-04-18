@@ -1,6 +1,9 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, reset } from 'redux-form';
 import { Form, Button } from 'semantic-ui-react';
+
+const afterSubmit = (result, dispatch) =>
+  dispatch(reset('post'));
 
 const NewPost = props => {
   const { handleSubmit } = props;
@@ -20,5 +23,6 @@ const NewPost = props => {
 };
 
 export default reduxForm({
-  form: 'post'
+  form: 'post',
+  onSubmitSuccess: afterSubmit,
 })(NewPost);

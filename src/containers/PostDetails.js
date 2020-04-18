@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { Container, Header, Divider, Segment, List, Button } from 'semantic-ui-react'
+import { Container, Header, Divider, Segment, List, Button, Dimmer, Loader } from 'semantic-ui-react'
 import * as postsActions from '../actions/postsActions';
 import CommentItem from '../components/CommentItem';
 
 const PostDetails = (props) => {
-  const { posts, getPost, comments, getComments } = props;
+  const { posts, getPost, comments, getComments, isLoading, setIsPostLoading } = props;
   const history = useHistory();
   const params = useParams();
   const postId = parseInt(params.postId);
@@ -22,12 +22,14 @@ const PostDetails = (props) => {
   );
 
   useEffect(() => {
-    if (!userPost) getPost(postId);
-    if (!userComments) getComments(postId)
+    setIsPostLoading(true);
+    getPost(postId);
+    getComments(postId);
   }, []);
 
   return (
     <Container className="my-container">
+      <Dimmer active={isLoading}><Loader /></Dimmer>
       <Button content="Back" onClick={() => history.goBack()} />
       {userPost ? (<Container text>
         <Header as='h2'>{userPost.title}</Header>
@@ -45,11 +47,13 @@ const PostDetails = (props) => {
 const mapDispatchToProps = {
     getPost: postsActions.getPost,
     getComments: postsActions.getPostComments,
+    setIsPostLoading: postsActions.setIsLoading,
 };
 const mapStateToProps = ({ posts, users }) => ({
   posts: posts.userPosts,
   users: users.usersList,
   comments: posts.postComments,
+  isLoading: posts.isLoading,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetails);
