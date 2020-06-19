@@ -9,9 +9,15 @@ import './index.css';
 
 const store = createStore(reducers, applyMiddleware(thunk));
 
-render(
+export const AppWithStore = () => (
   <Provider store={store}>
     <App />
+  </Provider>
+);
+
+render(
+  <Provider store={store}>
+    <AppWithStore />
   </Provider>,
   document.getElementById("root")
 );
