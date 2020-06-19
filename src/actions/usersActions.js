@@ -1,5 +1,9 @@
 import blogService from '../services/blogService';
 
+export const GET_USERS = "GET_USERS";
+export const GET_USER = "GET_USER";
+export const SET_IS_USER_LOADING = "SET_IS_USER_LOADING";
+
 export const getUsers = () => async dispatch => {
   try {
     const { data } = await blogService.get('/users');
